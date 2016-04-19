@@ -9,9 +9,13 @@
 
 我知道的名句不多，就以此来激励自己，每天写点编程题目，努力提升自己 :smile:
 
-## 第一章：数组和字符串
+## 第一章：[数组和字符串](https://github.com/JinhaiZ/CtClSolution/tree/master/src/Chapter1)
 
 ### 1.9 String Rotation
+####题目简介：
+假设我们有一个判断一个字符串是否是另一个字符串的字串的方法**isSubString**，现在给我们两个字符串s1和s2，请判断s2是否是s1的*旋转*？条件
+是只使用**一次isSubString**方法。例如：”waterbottle“是”erbottlewat“的*旋转*。
+####题目解答：
 书中提供的解题观点非常独特，判断一个字符串是否是另一个字符串的旋转，只需要判断一个字符串是否是另一个字符串的字串，当然，另一个字符串
 需要先行构造一下：即，判断AB是否是BA的旋转比较困难，转而比较AB是否是BABA的字串即可，当然，需要首先判定两个字符串的大小。
 ```java
@@ -46,5 +50,5 @@ public class StringRotation {
 }
 ```
 
-## 第二章：链表
-末完待续
+## 第二章：[链表](https://github.com/JinhaiZ/CtClSolution/tree/master/src/Chapter2) 
+
