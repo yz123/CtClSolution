@@ -52,3 +52,47 @@ public class StringRotation {
 
 ## 第二章：[链表](https://github.com/JinhaiZ/CtClSolution/tree/master/src/Chapter2) 
 
+###2.1 Remove Dups
+####题目简介：
+删除单向链表LinkedList中重复的元素并考虑在不使用使用**额外存储**的条件下解决问题
+####题目解答：
+如果可以引入额外存储，一个哈希集合HashSet，以此保存链表中不重复的元素，发现链表中有重复的元素即删除。不适用额外存储的情况下，可以采用
+链表操作中经典的**双指针**解法，一个slow指针指示当前链表中的元素，另一个fast指针在slow指针每一次前移时遍历从slow指针指示元素的开始到链表末
+尾的元素结束
+```java
+public class RemoveDups {
+	public static void removeDups(LinkedListNode node) {
+		//HashSet<Integer> dups = new HashSet<Integer>();
+		LinkedListNode slow = node;
+		while (slow != null) {
+			LinkedListNode fast = slow;
+			//LinkedListNode prev = null;
+			while (fast.next != null) {
+				if (fast.next.data == slow.data) {
+					fast.next = fast.next.next;
+				} else {
+					fast = fast.next;
+				}
+			}
+			slow = slow.next;
+		}
+	}
+	
+	public static void main(String[] args) {	
+		LinkedListNode first = new LinkedListNode(0, null, null); //AssortedMethods.randomLinkedList(1000, 0, 2);
+		LinkedListNode head = first;
+		LinkedListNode second = first;
+		for (int i = 1; i < 15; i++) {
+			second = new LinkedListNode(i % 4, null, null);
+			first.setNext(second);
+			second.setPrevious(first);
+			first = second;
+		}
+		System.out.println(head.printForward());
+		removeDups(head);
+		System.out.println(head.printForward());
+	}
+}
+```
+时间复杂度分析：O(N^2)
+空间复杂度分析 O(1)
