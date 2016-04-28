@@ -4,7 +4,7 @@ import java.util.NoSuchElementException;
 import java.util.Stack;
 
 public class QueueViaStack<T> {
-	// A simple implementation
+	// A efficient implementation
 	private Stack<T> master;
 	private Stack<T> slave;
 	
@@ -18,45 +18,48 @@ public class QueueViaStack<T> {
 	}
 	
 	public T remove() {
-		if (master.isEmpty()) throw new NoSuchElementException();
-		while (!master.isEmpty()) {
-			T temp = master.pop();
-			slave.push(temp);
-		}
-		T data = slave.pop();
-		if(!slave.isEmpty()) {
-			while(!slave.isEmpty()) {
-				T temp = slave.pop();
-				master.push(temp);
+		if (size() == 0) throw new NoSuchElementException();
+		if (slave.size() == 0) {
+			while (!master.isEmpty()) {
+				T temp = master.pop();
+				slave.push(temp);
 			}
 		}
-		return data;
+		return slave.pop();
 	} 
 	
 	public T peek() {
-		if (master.isEmpty()) throw new NoSuchElementException();
-		while (!master.isEmpty()) {
-			T temp = master.pop();
-			slave.push(temp);
+		if (size() == 0) throw new NoSuchElementException();
+		if (slave.size() == 0) {
+			while (!master.isEmpty()) {
+				T temp = master.pop();
+				slave.push(temp);
+			}
 		}
-		T data = slave.peek();
-		while(!slave.isEmpty()) {
-			T temp = slave.pop();
-			master.push(temp);
-		}
-		return data;
+		return slave.peek();
+
 	}
 	
 	public boolean isEmpty() {
 		return master.isEmpty();
 	}
 	
+	public int size() {
+		return master.size()+slave.size();
+	}
+	
 	public static void main(String[] args) {
 		QueueViaStack<Integer> queue = new QueueViaStack<Integer>();
-		for (int i = 0; i < 7; i++) {
+		for (int i = 0; i < 3; i++) {
 			queue.add(i+1);
 		}
-		for (int i = 0; i < 7; i++) {
+		for (int i = 0; i < 2; i++) {
+			System.out.println("Dequeue "+queue.remove());
+		}
+		for (int i = 0; i < 4; i++) {
+			queue.add(i+1);
+		}
+		for (int i = 0; i < 5; i++) {
 			System.out.println("Dequeue "+queue.remove());
 		}
 	}
