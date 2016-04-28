@@ -4,9 +4,14 @@ import java.util.NoSuchElementException;
 import java.util.Stack;
 
 public class QueueViaStack<T> {
+	// A simple implementation
+	private Stack<T> master;
+	private Stack<T> slave;
 	
-	private Stack<T> master = new Stack<T>();
-	private Stack<T> slave = new Stack<T>();;
+	public QueueViaStack() {
+		master = new Stack<T>();
+		slave = new Stack<T>();
+	}
 	
 	public void add(T data) {
 		master.push(data);
@@ -55,5 +60,4 @@ public class QueueViaStack<T> {
 			System.out.println("Dequeue "+queue.remove());
 		}
 	}
-
 }
