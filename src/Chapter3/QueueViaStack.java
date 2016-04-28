@@ -1,48 +1,49 @@
 package Chapter3;
 
 import java.util.NoSuchElementException;
+import java.util.Stack;
 
 public class QueueViaStack<T> {
-	private static class QueueNode<T> {
-		private T data;
-		private QueueNode<T> next;
-		
-		public QueueNode(T data) {
-			this.data = data;
-		}		
-	}
 	
-	private QueueNode<T> bottom;
-	private QueueNode<T> top;
+	private Stack<T> master = new Stack<T>();
+	private Stack<T> slave = new Stack<T>();;
 	
 	public void add(T data) {
-		QueueNode<T> n = new QueueNode<T>(data);
-		if (top == null && bottom == null) {
-			top = n;
-			bottom = top;
-		}
-		top.next = n;
-		top = n;
+		master.push(data);
 	}
 	
 	public T remove() {
-		if (isEmpty()) throw new NoSuchElementException();
-		T data = bottom.data;
-		bottom = bottom.next;
-		if (bottom == null) {
-			top = null;
+		if (master.isEmpty()) throw new NoSuchElementException();
+		while (!master.isEmpty()) {
+			T temp = master.pop();
+			slave.push(temp);
+		}
+		T data = slave.pop();
+		if(!slave.isEmpty()) {
+			while(!slave.isEmpty()) {
+				T temp = slave.pop();
+				master.push(temp);
+			}
 		}
 		return data;
 	} 
 	
 	public T peek() {
-		if (bottom == null) throw new NoSuchElementException();
-		T data = bottom.data;
+		if (master.isEmpty()) throw new NoSuchElementException();
+		while (!master.isEmpty()) {
+			T temp = master.pop();
+			slave.push(temp);
+		}
+		T data = slave.peek();
+		while(!slave.isEmpty()) {
+			T temp = slave.pop();
+			master.push(temp);
+		}
 		return data;
 	}
 	
 	public boolean isEmpty() {
-		return bottom == null;
+		return master.isEmpty();
 	}
 	
 	public static void main(String[] args) {
@@ -50,7 +51,7 @@ public class QueueViaStack<T> {
 		for (int i = 0; i < 7; i++) {
 			queue.add(i+1);
 		}
-		for (int i = 0; i <7; i++) {
+		for (int i = 0; i < 7; i++) {
 			System.out.println("Dequeue "+queue.remove());
 		}
 	}
