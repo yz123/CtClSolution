@@ -2,6 +2,8 @@ package Chapter3;
 
 import java.util.Stack;
 
+import CtCILibrary.AssortedMethods;
+
 public class SortStack {
 
 	public static Stack<Integer> sortStack(Stack<Integer> s) {
@@ -26,17 +28,23 @@ public class SortStack {
 		return s;
 	}
 	
-	public static void main(String args[]) {
+	public static void main(String [] args) {
 		Stack<Integer> s = new Stack<Integer>();
-		s.push(5);
-		s.push(3);
-		s.push(4);
-		s.push(2);
-		s.push(1);
+		for (int i = 0; i < 10; i++) {
+			int r = AssortedMethods.randomIntInRange(0,  1000);
+			s.push(r);
+		}
+		
 		SortStack.sortStack(s);
-		int size = s.size();
-		for (int i = 0;i < size;i++) {
+		
+		while(!s.isEmpty()) {
 			System.out.println(s.pop());
 		}
 	}
 }
+
+/*
+ * Space Complexity O(N) 
+ * Time Complexity O(N^2) where N is the number of elements in the stack
+ * 
+*/
