@@ -102,7 +102,7 @@ public class RemoveDups {
 ###3.4 Queue via Stacks
 ####题目简介：
 使用两个栈Stack实现一个队列Queue，准确的说是实现MyQueue Class
-####题目解答：
+####题目分析：
 首先观察书中对**MyQueue** class的实现方法
 ```java
 import java.util.NoSuchElementException;
@@ -152,3 +152,74 @@ public class MyQueue<T> {
 }
 ```
 需要实现向队尾增加一个元素**add()**， 从队首去掉一个元素**remove()**，查看对首元素**peek()**以及判断队列是否为空**isEmpty()**
+####题目解答：
+首先很容易想到一个用两个stack实现queue的naive的办法：一个stack存储元素，当需要执行peek或remove操作时，把所有元素从第一个stack全部pop到另外一个stack中，在另外一个stack上执行peek或pop操作就行，执行完毕后，依次把元素pop回原来的stack。这个方法很容易理解，但是实际上还有优化的空间，我们实际上没有必要来回pop元素，只有在必要时才在两个stack间pop元素。
+
+我们还是维护两个stack，master和slave，master用来入队，slave用来出队。详细来说，当第一次执行remove操作时，把master的所有元素pop到slave队列中，只有当salve的元素pop完了，再将master的元素都pop进来。而add操作都在master上执行，这样一来可以省区很多不必要的pop操作。
+####题目解答：
+```java
+import java.util.NoSuchElementException;
+import java.util.Stack;
+
+public class QueueViaStack<T> {
+	// A efficient implementation
+	private Stack<T> master;
+	private Stack<T> slave;
+	
+	public QueueViaStack() {
+		master = new Stack<T>();
+		slave = new Stack<T>();
+	}
+	
+	public void add(T data) {
+		master.push(data);
+	}
+	
+	public T remove() {
+		if (size() == 0) throw new NoSuchElementException();
+		if (slave.size() == 0) {
+			while (!master.isEmpty()) {
+				T temp = master.pop();
+				slave.push(temp);
+			}
+		}
+		return slave.pop();
+	} 
+	
+	public T peek() {
+		if (size() == 0) throw new NoSuchElementException();
+		if (slave.size() == 0) {
+			while (!master.isEmpty()) {
+				T temp = master.pop();
+				slave.push(temp);
+			}
+		}
+		return slave.peek();
+
+	}
+	
+	public boolean isEmpty() {
+		return master.isEmpty();
+	}
+	
+	public int size() {
+		return master.size()+slave.size();
+	}
+	
+	public static void main(String[] args) {
+		QueueViaStack<Integer> queue = new QueueViaStack<Integer>();
+		for (int i = 0; i < 3; i++) {
+			queue.add(i+1);
+		}
+		for (int i = 0; i < 2; i++) {
+			System.out.println("Dequeue "+queue.remove());
+		}
+		for (int i = 0; i < 4; i++) {
+			queue.add(i+1);
+		}
+		for (int i = 0; i < 5; i++) {
+			System.out.println("Dequeue "+queue.remove());
+		}
+	}
+}
+```
