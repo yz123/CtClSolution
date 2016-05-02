@@ -96,3 +96,59 @@ public class RemoveDups {
 ```
 时间复杂度分析：O(N^2)
 空间复杂度分析 O(1)
+
+## 第三章：[栈和队列](https://github.com/JinhaiZ/CtClSolution/tree/master/src/Chapter3) 
+
+###3.4 Queue via Stacks
+####题目简介：
+使用两个栈Stack实现一个队列Queue，准确的说是实现MyQueue Class
+####题目解答：
+首先观察书中对**MyQueue** class的实现方法
+```java
+import java.util.NoSuchElementException;
+
+public class MyQueue<T> {
+	private static class QueueNode<T> {
+		private T data;
+		private QueueNode<T> next;
+		
+		public QueueNode(T data) {
+			this.data = data;
+		}
+	}
+	
+	private QueueNode<T> first;
+	private QueueNode<T> last;
+
+	public void add(T item) { 
+		QueueNode<T> t = new QueueNode<T>(item);
+		if (last != null) {
+			last.next = t;
+		}
+		last = t;
+		if (first == null) {
+			first = last;
+		}
+	} 
+
+	public T remove() {
+		if (first == null) throw new NoSuchElementException();
+		T data = first.data;
+		first = first.next;
+		if (first == null) {
+			last = null;
+		}
+		return data;
+	}
+	
+	public T peek() {
+		if (first == null) throw new NoSuchElementException();
+		return first.data;
+	}
+	
+	public boolean isEmpty() {
+		return first == null;
+	}
+}
+```
+需要实现向队尾增加一个元素**add()**， 从队首去掉一个元素**remove()**，查看对首元素**peek()**以及判断队列是否为空**isEmpty()**
