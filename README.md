@@ -156,7 +156,6 @@ public class MyQueue<T> {
 首先很容易想到一个用两个stack实现queue的naive的办法：一个stack存储元素，当需要执行peek或remove操作时，把所有元素从第一个stack全部pop到另外一个stack中，在另外一个stack上执行peek或pop操作就行，执行完毕后，依次把元素pop回原来的stack。这个方法很容易理解，但是实际上还有优化的空间，我们实际上没有必要来回pop元素，只有在必要时才在两个stack间pop元素。
 
 我们还是维护两个stack，master和slave，master用来入队，slave用来出队。详细来说，当第一次执行remove操作时，把master的所有元素pop到slave队列中，只有当salve的元素pop完了，再将master的元素都pop进来。而add操作都在master上执行，这样一来可以省区很多不必要的pop操作。
-####题目解答：
 ```java
 import java.util.NoSuchElementException;
 import java.util.Stack;
