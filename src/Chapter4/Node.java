@@ -4,7 +4,7 @@ public class Node {
 	private String vertex;
 	private Node[] adjacent;
 	public int adjacentCount;
-	public State.state state;
+	public State.state marked;
 
 	public Node(String name, int neighbourLength){
 		this.vertex = name;

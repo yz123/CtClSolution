@@ -1,5 +1,10 @@
 package Chapter4;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
+import Chapter4.State.state;
+
 public class RouteBetweenNodes {
 
 	public static void main(String a[])
@@ -34,6 +39,35 @@ public class RouteBetweenNodes {
 		return g;
 	}
 
-    public static boolean search(Graph g,Node start,Node end) {
-		return false;  }
+    public static boolean search(Graph g, Node start,Node end) {
+    	Node listNode[] = g.getNodes();
+    	int check = 0;
+    	for (Node n: listNode) {
+    		//Unvisited, Visited, Visiting;
+    		n.marked = state.Unvisited;
+    		if (n.getVertex().equals(start.getVertex())) check ++;
+    		if (n.getVertex().equals(end.getVertex())) check ++;    		
+    	}
+    	if (check != 2){
+    		System.out.println("the nodes do not present at the graph...");
+    		return false;
+    	}
+    	// Breadth-First-Search
+    	Queue<Node> queue = new LinkedList<Node>();
+    	queue.add(start);
+    	start.marked = state.Visited;
+    	
+    	while(!queue.isEmpty()) {
+    		Node r = queue.poll();
+    		if(r.getVertex().equals(end.getVertex()))
+    			return true;
+    		for (Node n : r.getAdjacent()) {
+    			if (n.marked == state.Unvisited){
+    				n.marked = state.Visited;
+    				queue.add(n);
+    			}
+    		}
+    	}
+		return false;  
+	}
 }
