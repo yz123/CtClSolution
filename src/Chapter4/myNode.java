@@ -1,5 +1,10 @@
 package Chapter4;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
+import CtCILibrary.TreeNode;
+
 public class myNode {
 	public myNode right;
 	public myNode left;
@@ -44,5 +49,28 @@ public class myNode {
 		int leftHeight = this.left == null ? 0: this.left.height() ;
 		int rightHeight = this.right == null ? 0:this.right.height();
 		return  1 + Math.max(leftHeight, rightHeight);
+	}
+	
+	public static void inOrderTraversal(myNode node, Queue q) {
+		if (node != null) {
+			inOrderTraversal(node.left, q);
+			q.add(node);
+			inOrderTraversal(node.right, q);
+		}
+	} 
+	
+	public boolean isBST() {
+		Queue<myNode> q = new LinkedList<myNode>();
+		inOrderTraversal(this, q);
+		myNode n = q.peek();
+		while(!q.isEmpty()) {
+			System.out.println(" "+q.peek().data);
+			if (n.data < q.poll().data)
+				break;
+		}
+		if (q.isEmpty())
+			return true;
+		else
+			return false;
 	}
 }
