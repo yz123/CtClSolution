@@ -40,5 +40,9 @@ public class myNode {
 		return creatMinalTree(array, start, end);
 	}
 	
-
+	public int height() {
+		int leftHeight = this.left == null ? 0: this.left.height() ;
+		int rightHeight = this.right == null ? 0:this.right.height();
+		return  1 + Math.max(leftHeight, rightHeight);
+	}
 }
