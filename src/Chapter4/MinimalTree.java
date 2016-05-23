@@ -9,7 +9,7 @@ public class MinimalTree {
 		// We needed this code for other files, so check out the code in the library
 		myNode root = myNode.creatMinalTree(array);
 		System.out.println("Root? " + root.data);
-		//System.out.println("Created BST? " + root.isBST());
+		System.out.println("Created BST? " + root.isBST());
 		System.out.println("Height: " + root.height());
 	}
 
