@@ -14,12 +14,13 @@ public class ListofDepth {
 		q.add(root);
 		while (q != null) {
 			myNode current = q.poll();
-			if (current != null)
+			if (current != null){
 				System.out.println(current.data);
-			if (current.right != null)
-				q.add(current.right);
-			if (current.left != null)
-				q.add(current.left);
+				if (current.right != null)
+					q.add(current.right);
+				if (current.left != null)
+					q.add(current.left);
+				}
 		}
 		
 	}
