@@ -64,7 +64,7 @@ public class myNode {
 		inOrderTraversal(this, q);
 		myNode n = q.peek();
 		while(!q.isEmpty()) {
-			System.out.println(" "+q.peek().data);
+			//System.out.println(" "+q.peek().data);
 			if (n.data < q.poll().data)
 				break;
 		}
