@@ -7,19 +7,18 @@ public class ListofDepth {
 	
 	public static ArrayList<LinkedList<myNode>> listOfDepth(myNode root) {
 		ArrayList<LinkedList<myNode>> result = new ArrayList<LinkedList<myNode>>();
-		LinkedList<myNode> currentList = new LinkedList<myNode>();
-		currentList.add(root);
-		// BFS
-		while (!currentList.isEmpty()){
-			result.add(currentList);
-			LinkedList<myNode> parents = currentList;
-			currentList = new LinkedList<myNode>();
+		LinkedList<myNode> current = new LinkedList<myNode>();
+		current.add(root);
+		while (!current.isEmpty()){
+			result.add(current);
+			LinkedList<myNode> parents = current;
+			current = new LinkedList<myNode>();
 			for (myNode parent: parents) {
-				//System.out.println(parent.data);
-				if (parent.right != null)
-					currentList.add(parent.right);
-				if (parent.left != null){
-					currentList.add(parent.left);
+				if (parent.left != null) {
+					current.add(parent.left);
+				}
+				if (parent.right != null) {
+					current.add(parent.right);
 				}
 			}
 		}
@@ -43,3 +42,6 @@ public class ListofDepth {
 		
 	}
 }
+/*
+ * Time complexity O(N), space complexity O(N), N is number of nodes in the binar tree
+ */
