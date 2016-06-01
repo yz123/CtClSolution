@@ -20,7 +20,7 @@ public class CheckBalanced {
 				q.add(current.right);
 			}
 			if (current.left != null) {
-				right = current.left.height();
+				left = current.left.height();
 				q.add(current.left);
 			}
 			if (right - left > 1)
