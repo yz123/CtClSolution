@@ -10,7 +10,13 @@ public class CheckBalanced {
 			return 0;
 		}
 		int leftHeight = getHeight(root.left);
+		if (leftHeight == Integer.MIN_VALUE)
+			return Integer.MIN_VALUE;// Pass error up
+		
 		int rightHeight = getHeight(root.right);
+		if (rightHeight == Integer.MIN_VALUE)
+			return Integer.MIN_VALUE;// Pass error up
+		
 		int diffHeight = Math.abs(leftHeight - rightHeight);
 		if (diffHeight > 1)
 			return Integer.MIN_VALUE;
@@ -41,5 +47,5 @@ public class CheckBalanced {
 	}
 }
 /*
-* Time complexity O(N), N is the number of nodes in the tree
+* Time complexity O(N), Space complexity O(N) while N is the number of nodes in the tree
 */
