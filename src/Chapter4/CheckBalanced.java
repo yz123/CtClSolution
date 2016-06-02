@@ -1,32 +1,26 @@
 package Chapter4;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 import CtCILibrary.AssortedMethods;
 import CtCILibrary.TreeNode;
 
 public class CheckBalanced {
+	// height of tree: 1,2,3,4...
+	public static int getHeight(TreeNode root) {
+		if (root == null) {
+			return 0;
+		}
+		return (1+Math.max(getHeight(root.left), getHeight(root.right)));
+	}
 	
 	public static boolean isBalanced(TreeNode root) {
-		int left = 0;
-		int right = 0;
-		Queue<TreeNode> q = new LinkedList<TreeNode>();
-		q.add(root);
-		while (!q.isEmpty()) {
-			TreeNode current = q.poll();
-			if (current.right != null) {
-				right = current.right.height();
-				q.add(current.right);
-			}
-			if (current.left != null) {
-				left = current.left.height();
-				q.add(current.left);
-			}
-			if (right - left > 1)
-				return false;
+		if (root == null) {
+			return true;
 		}
-		return true;
+		int heightDiff = Math.abs(getHeight(root.left) - getHeight(root.right));
+		if (heightDiff > 1) {
+			return false;
+		}
+		return (isBalanced(root.left) && isBalanced(root.right));
 	}
 		
 	public static void main(String[] args) {
@@ -45,3 +39,6 @@ public class CheckBalanced {
 		System.out.println("Is balanced? " + isBalanced(unbalanced));
 	}
 }
+/*
+* Time complexity O(Nlog(N)), N is the number of nodes in the tree
+*/
