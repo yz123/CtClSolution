@@ -9,18 +9,19 @@ public class CheckBalanced {
 		if (root == null) {
 			return 0;
 		}
-		return (1+Math.max(getHeight(root.left), getHeight(root.right)));
+		int leftHeight = getHeight(root.left);
+		int rightHeight = getHeight(root.right);
+		int diffHeight = Math.abs(leftHeight - rightHeight);
+		if (diffHeight > 1)
+			return Integer.MIN_VALUE;
+		return 1+Math.max(leftHeight, rightHeight);
 	}
 	
 	public static boolean isBalanced(TreeNode root) {
-		if (root == null) {
-			return true;
-		}
-		int heightDiff = Math.abs(getHeight(root.left) - getHeight(root.right));
-		if (heightDiff > 1) {
+		int height = getHeight(root);
+		if (height == Integer.MIN_VALUE)
 			return false;
-		}
-		return (isBalanced(root.left) && isBalanced(root.right));
+		return true;
 	}
 		
 	public static void main(String[] args) {
@@ -40,5 +41,5 @@ public class CheckBalanced {
 	}
 }
 /*
-* Time complexity O(Nlog(N)), N is the number of nodes in the tree
+* Time complexity O(N), N is the number of nodes in the tree
 */
