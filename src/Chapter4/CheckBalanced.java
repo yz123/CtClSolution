@@ -4,10 +4,10 @@ import CtCILibrary.AssortedMethods;
 import CtCILibrary.TreeNode;
 
 public class CheckBalanced {
-	// height of tree: 1,2,3,4...
+	// height of tree: 0,1,2,3,4...
 	public static int getHeight(TreeNode root) {
 		if (root == null) {
-			return 0;
+			return -1;
 		}
 		int leftHeight = getHeight(root.left);
 		if (leftHeight == Integer.MIN_VALUE)
