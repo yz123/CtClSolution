@@ -5,18 +5,28 @@ import CtCILibrary.TreeNode;
 public class ValidateBST_recursion {
 	static Integer lastPrint;
 	public static boolean isBST(TreeNode n) {
+		return isBST(n, true);
+	}
+	public static boolean isBST(TreeNode n, boolean equal) {
 		// LEFT <= CURRENT < RIGHT 
 		if (n == null)
 			return true;
 		// LEFT
-		if(!isBST(n.left))
+		if(!isBST(n.left,true))
 			return false;
 		// CURRENT
-		if (lastPrint != null && lastPrint >= n.data )
-			return false;
+		if (equal == true) {
+			if (lastPrint != null && lastPrint > n.data )
+				return false;
+		}
+		if (equal == false) {
+			if (lastPrint != null && lastPrint >= n.data )
+				return false;
+		}
+		
 		lastPrint = n.data;
 		// RIGHT
-		if(!isBST(n.right))
+		if(!isBST(n.right,false))
 			return false;
 		return true;
 	}
@@ -48,7 +58,7 @@ public class ValidateBST_recursion {
 		node = TreeNode.createMinimalBST(array2);
 		node.left.data = 2;
 		node.print();
-		//last_printed = null;
+		lastPrint = null;
 		condition = isBST(node);
 		System.out.println("should be true: " + condition);
 
@@ -64,7 +74,7 @@ public class ValidateBST_recursion {
 		node = TreeNode.createMinimalBST(array3);
 		node.right.data = 2;
 		node.print();
-		//last_printed = null;
+		lastPrint = null;
 		condition = isBST(node);
 		System.out.println("should be false: " + condition);
 	}
@@ -73,5 +83,5 @@ public class ValidateBST_recursion {
 /*
  * performance: time complexity O(n), space complexity O(n)
  * weakness: need extra space, cannot handle duplicate values
- * to do: build off property that LEFT <= CURRENT < RIGHT 
+ * lastPrint is static, needs to initialize every time
  */
